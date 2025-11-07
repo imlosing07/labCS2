@@ -1,21 +1,64 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Base colors */
+  --background: #faf7f5;
+  --foreground: #2d3142;
+  
+  /* Primary colors */
+  --primary-light: #e88d67;
+  --primary: #c75d3c;
+  --primary-dark: #a64b2f;
+  
+  /* Accent colors */
+  --accent-light: #7e8d85;
+  --accent: #5c6b63;
+  --accent-dark: #3f4a44;
+  
+  /* Neutral colors */
+  --neutral-100: #f5f2f0;
+  --neutral-200: #e6e0db;
+  --neutral-300: #d1c7bf;
+  --neutral-400: #b3a69b;
+  --neutral-500: #8c7b6d;
+  
+  /* Semantic colors */
+  --success: #68904d;
+  --warning: #e4b363;
+  --error: #c14953;
 }
 
-@theme inline {
+/* Base theme variables */
+:root {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #2d3142;
+    --foreground: #f5f2f0;
+    
+    /* Adjusted colors for dark mode */
+    --primary-light: #e88d67;
+    --primary: #c75d3c;
+    --primary-dark: #8f432c;
+    
+    --accent-light: #8c9e94;
+    --accent: #5c6b63;
+    --accent-dark: #3f4a44;
+    
+    --neutral-100: #3f4455;
+    --neutral-200: #4d5266;
+    --neutral-300: #5f657c;
+    --neutral-400: #777d96;
+    --neutral-500: #9198b4;
+    
+    --success: #7ba75c;
+    --warning: #e4b363;
+    --error: #d65762;
   }
 }
 

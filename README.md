@@ -1,36 +1,119 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Perfecto, te preparo el **README listo para copiar y pegar**, con instrucciones para que **tu amigo pueda clonar y ejecutar el proyecto** usando **pnpm**.
 
-## Getting Started
+---
 
-First, run the development server:
+## ✅ README.md (copia y pega en la raíz del proyecto)
+
+````md
+# 🧩 Proyecto Next.js + Tailwind (pnpm)
+
+Este proyecto está desarrollado con **Next.js (App Router)**, **TailwindCSS** y manejado con **pnpm**.
+
+---
+
+## 🔧 Requisitos Previos
+
+Asegúrate de tener instalado:
+
+| Herramienta | Versión Recomendada | Verificar |
+|------------|--------------------|-----------|
+| Node.js     | 18+                | `node -v` |
+| pnpm        | 8+                 | `pnpm -v` |
+
+Si no tienes **pnpm**, instálalo con:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install -g pnpm
+````
+
+---
+
+## 🚀 Cómo ejecutar el proyecto
+
+1. **Clonar el repositorio**
+
+```bash
+git clone https://github.com/tu-usuario/tu-repo.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. **Entrar al proyecto**
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+cd tu-repo
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+3. **Instalar dependencias**
 
-## Learn More
+```bash
+pnpm install
+```
 
-To learn more about Next.js, take a look at the following resources:
+4. **Levantar el servidor de desarrollo**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+pnpm run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Luego abrir en el navegador:
 
-## Deploy on Vercel
+```
+http://localhost:3000
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📦 Build para producción
+
+```bash
+pnpm run build
+pnpm run start
+```
+
+---
+
+## ✨ Estructura básica del proyecto
+
+```
+app/
+  page.jsx          # Página principal
+  layout.jsx        # Layout global
+public/             # Imágenes / assets
+styles/             # Estilos globales
+```
+
+---
+
+## 🤝 Colaboración
+
+Si otra persona modifica el código:
+
+```bash
+git pull
+pnpm install
+```
+
+---
+
+## 🐞 Problemas comunes
+
+| Error                     | Solución                              |
+| ------------------------- | ------------------------------------- |
+| `command not found: pnpm` | Instalar pnpm (`npm install -g pnpm`) |
+| `Cannot find module`      | Ejecutar `pnpm install`               |
+| Página no carga           | Confirmar que Node.js es ≥ 18         |
+
+---
+
+## 📄 Licencia
+
+Este proyecto es libre para uso académico y desarrollo colaborativo.
+
+
+---
+
+Si quieres, **puedo agregarte:**
+- Script para **deploy automático a Vercel**
+- Pipeline de **GitHub Actions**
+- `.env.example` para manejar variables de entorno
+
+Solo dime **sí o no** 👀
