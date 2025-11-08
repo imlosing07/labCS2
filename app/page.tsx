@@ -10,6 +10,35 @@ type Project = {
   lastScan: string;
   overallScore: number;
   trend: string;
+  metrics: {
+    performance: {
+      responseTime: number;
+      requestsPerSecond: number;
+      errorRate: number;
+      cpuUsage: number;
+      memoryUsage: number;
+      activeUsers: number;
+    };
+    reliability: {
+      uptime: number;
+      meanTimeToRecover: number;
+      failureRate: number;
+      availabilityLast24h: number;
+    };
+    security: {
+      vulnerabilitiesHigh: number;
+      vulnerabilitiesMedium: number;
+      vulnerabilitiesLow: number;
+      securityScore: number;
+      lastPenTest: string;
+    };
+    monitoring: {
+      alertsLast24h: number;
+      incidentsOpen: number;
+      mttr: number; // Mean Time To Resolution
+      grafanaDashboards: string[];
+    };
+  };
 };
 
 export default function Dashboard() {
@@ -22,19 +51,106 @@ export default function Dashboard() {
       name: 'E-Commerce Platform',
       lastScan: '2025-11-06 14:30',
       overallScore: 82,
-      trend: 'up'
+      trend: 'up',
+      metrics: {
+        performance: {
+          responseTime: 245, // ms
+          requestsPerSecond: 1250,
+          errorRate: 0.05,
+          cpuUsage: 65,
+          memoryUsage: 72,
+          activeUsers: 3420
+        },
+        reliability: {
+          uptime: 99.98,
+          meanTimeToRecover: 15, // minutos
+          failureRate: 0.02,
+          availabilityLast24h: 100
+        },
+        security: {
+          vulnerabilitiesHigh: 2,
+          vulnerabilitiesMedium: 8,
+          vulnerabilitiesLow: 15,
+          securityScore: 85,
+          lastPenTest: '2025-10-15'
+        },
+        monitoring: {
+          alertsLast24h: 5,
+          incidentsOpen: 2,
+          mttr: 45,
+          grafanaDashboards: ['Performance Overview', 'User Transactions', 'Infrastructure Health']
+        }
+      }
     },
     'mobile-banking': {
       name: 'Mobile Banking App',
       lastScan: '2025-11-06 10:15',
       overallScore: 76,
-      trend: 'down'
+      trend: 'down',
+      metrics: {
+        performance: {
+          responseTime: 180,
+          requestsPerSecond: 850,
+          errorRate: 0.08,
+          cpuUsage: 78,
+          memoryUsage: 85,
+          activeUsers: 1850
+        },
+        reliability: {
+          uptime: 99.95,
+          meanTimeToRecover: 22,
+          failureRate: 0.03,
+          availabilityLast24h: 99.8
+        },
+        security: {
+          vulnerabilitiesHigh: 4,
+          vulnerabilitiesMedium: 12,
+          vulnerabilitiesLow: 23,
+          securityScore: 78,
+          lastPenTest: '2025-10-28'
+        },
+        monitoring: {
+          alertsLast24h: 12,
+          incidentsOpen: 4,
+          mttr: 65,
+          grafanaDashboards: ['API Performance', 'Security Metrics', 'User Authentication']
+        }
+      }
     },
     'inventory-system': {
       name: 'Inventory Management System',
       lastScan: '2025-11-05 16:45',
       overallScore: 88,
-      trend: 'up'
+      trend: 'up',
+      metrics: {
+        performance: {
+          responseTime: 120,
+          requestsPerSecond: 450,
+          errorRate: 0.02,
+          cpuUsage: 45,
+          memoryUsage: 58,
+          activeUsers: 780
+        },
+        reliability: {
+          uptime: 99.99,
+          meanTimeToRecover: 12,
+          failureRate: 0.01,
+          availabilityLast24h: 100
+        },
+        security: {
+          vulnerabilitiesHigh: 1,
+          vulnerabilitiesMedium: 5,
+          vulnerabilitiesLow: 12,
+          securityScore: 92,
+          lastPenTest: '2025-11-01'
+        },
+        monitoring: {
+          alertsLast24h: 2,
+          incidentsOpen: 1,
+          mttr: 30,
+          grafanaDashboards: ['Stock Levels', 'Warehouse Operations', 'System Health']
+        }
+      }
     }
   };
 
@@ -246,6 +362,22 @@ export default function Dashboard() {
         {activeTab === 'overview' && (
           <div className="space-y-6">
             {/* KPI Cards */}
+            {/* Grafana Integration Notice */}
+            <div className="bg-[#5c6b63] text-white p-4 rounded-xl mb-6 shadow-lg">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-3">
+                  <Activity className="w-6 h-6" />
+                  <div>
+                    <h3 className="font-semibold">Monitoreo en Tiempo Real con Grafana</h3>
+                    <p className="text-sm opacity-90">Dashboards activos: {projects[selectedProject].metrics.monitoring.grafanaDashboards.join(', ')}</p>
+                  </div>
+                </div>
+                <span className="px-3 py-1 bg-[#3f4a44] rounded-full text-sm">
+                  Última actualización: {new Date().toLocaleTimeString()}
+                </span>
+              </div>
+            </div>
+
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
               <div className="bg-white rounded-xl shadow-md p-6 border border-[#d1c7bf]">
                 <div className="flex items-center justify-between mb-2">
@@ -257,33 +389,159 @@ export default function Dashboard() {
                 </div>
                 <div className="text-4xl font-bold text-slate-800">{projects[selectedProject].overallScore}</div>
                 <div className="text-xs text-slate-500 mt-1">de 100 puntos</div>
+                <div className="mt-3 pt-3 border-t border-[#d1c7bf]">
+                  <div className="text-xs text-[#5c6b63]">Métricas en tiempo real:</div>
+                  <div className="grid grid-cols-2 gap-2 mt-2">
+                    <div className="text-xs">
+                      <span className="text-[#c75d3c]">CPU:</span> {projects[selectedProject].metrics.performance.cpuUsage}%
+                    </div>
+                    <div className="text-xs">
+                      <span className="text-[#c75d3c]">RAM:</span> {projects[selectedProject].metrics.performance.memoryUsage}%
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              <div className="bg-white rounded-xl shadow-md p-6 border border-slate-200">
+              <div className="bg-white rounded-xl shadow-md p-6 border border-[#d1c7bf]">
                 <div className="flex items-center justify-between mb-2">
-                  <div className="text-sm font-medium text-slate-600">Cobertura de Código</div>
-                  <Activity className="w-5 h-5 text-blue-500" />
+                  <div className="text-sm font-medium text-[#5c6b63]">Rendimiento</div>
+                  <Activity className="w-5 h-5 text-[#c75d3c]" />
                 </div>
-                <div className="text-4xl font-bold text-slate-800">{sonarQubeData.coverage}%</div>
-                <div className="text-xs text-slate-500 mt-1">Jest + JUnit</div>
+                <div className="text-4xl font-bold text-slate-800">{projects[selectedProject].metrics.performance.responseTime}<span className="text-lg">ms</span></div>
+                <div className="text-xs text-[#5c6b63] mt-1">Tiempo de respuesta promedio</div>
+                <div className="mt-3 pt-3 border-t border-[#d1c7bf]">
+                  <div className="grid grid-cols-2 gap-2">
+                    <div className="text-xs">
+                      <span className="text-[#c75d3c]">RPS:</span> {projects[selectedProject].metrics.performance.requestsPerSecond}
+                    </div>
+                    <div className="text-xs">
+                      <span className="text-[#c75d3c]">Error:</span> {projects[selectedProject].metrics.performance.errorRate}%
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              <div className="bg-white rounded-xl shadow-md p-6 border border-slate-200">
+              <div className="bg-white rounded-xl shadow-md p-6 border border-[#d1c7bf]">
                 <div className="flex items-center justify-between mb-2">
-                  <div className="text-sm font-medium text-slate-600">Vulnerabilidades</div>
-                  <AlertTriangle className="w-5 h-5 text-orange-500" />
+                  <div className="text-sm font-medium text-[#5c6b63]">Disponibilidad</div>
+                  <CheckCircle className="w-5 h-5 text-[#68904d]" />
                 </div>
-                <div className="text-4xl font-bold text-slate-800">{sonarQubeData.vulnerabilities}</div>
-                <div className="text-xs text-slate-500 mt-1">OWASP ZAP</div>
+                <div className="text-4xl font-bold text-slate-800">{projects[selectedProject].metrics.reliability.uptime}%</div>
+                <div className="text-xs text-[#5c6b63] mt-1">Uptime últimas 24h</div>
+                <div className="mt-3 pt-3 border-t border-[#d1c7bf]">
+                  <div className="grid grid-cols-2 gap-2">
+                    <div className="text-xs">
+                      <span className="text-[#c75d3c]">MTTR:</span> {projects[selectedProject].metrics.reliability.meanTimeToRecover}m
+                    </div>
+                    <div className="text-xs">
+                      <span className="text-[#c75d3c]">Fallos:</span> {projects[selectedProject].metrics.reliability.failureRate}%
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              <div className="bg-white rounded-xl shadow-md p-6 border border-slate-200">
+              <div className="bg-white rounded-xl shadow-md p-6 border border-[#d1c7bf]">
                 <div className="flex items-center justify-between mb-2">
-                  <div className="text-sm font-medium text-slate-600">Deuda Técnica</div>
-                  <Code className="w-5 h-5 text-purple-500" />
+                  <div className="text-sm font-medium text-[#5c6b63]">Monitoreo</div>
+                  <Database className="w-5 h-5 text-[#c75d3c]" />
                 </div>
-                <div className="text-3xl font-bold text-slate-800">{sonarQubeData.technicalDebt}</div>
-                <div className="text-xs text-slate-500 mt-1">SonarQube</div>
+                <div className="text-4xl font-bold text-slate-800">{projects[selectedProject].metrics.monitoring.alertsLast24h}</div>
+                <div className="text-xs text-[#5c6b63] mt-1">Alertas (24h)</div>
+                <div className="mt-3 pt-3 border-t border-[#d1c7bf]">
+                  <div className="grid grid-cols-2 gap-2">
+                    <div className="text-xs">
+                      <span className="text-[#c75d3c]">Incidentes:</span> {projects[selectedProject].metrics.monitoring.incidentsOpen}
+                    </div>
+                    <div className="text-xs">
+                      <span className="text-[#c75d3c]">MTTR:</span> {projects[selectedProject].metrics.monitoring.mttr}m
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Prometheus & Grafana Integration */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+              <div className="bg-white rounded-xl shadow-md p-6 border border-[#d1c7bf]">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-lg font-semibold text-[#5c6b63]">Métricas de Prometheus</h3>
+                  <div className="flex items-center space-x-2">
+                    <div className="w-2 h-2 bg-[#68904d] rounded-full animate-pulse"></div>
+                    <span className="text-xs text-[#5c6b63]">Recolectando datos</span>
+                  </div>
+                </div>
+                
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center p-3 bg-[#f5f2f0] rounded-lg">
+                    <div>
+                      <div className="text-sm font-medium text-[#3f4a44]">Usuarios Activos</div>
+                      <div className="text-2xl font-bold text-[#c75d3c]">{projects[selectedProject].metrics.performance.activeUsers}</div>
+                    </div>
+                    <Users className="w-8 h-8 text-[#5c6b63]" />
+                  </div>
+                  
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="p-3 bg-[#f5f2f0] rounded-lg">
+                      <div className="text-sm font-medium text-[#3f4a44] mb-1">CPU</div>
+                      <div className="relative pt-1">
+                        <div className="overflow-hidden h-2 text-xs flex rounded bg-[#e6e0db]">
+                          <div
+                            style={{ width: `${projects[selectedProject].metrics.performance.cpuUsage}%` }}
+                            className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-[#c75d3c]"
+                          ></div>
+                        </div>
+                        <div className="text-right mt-1">
+                          <span className="text-sm font-semibold text-[#c75d3c]">
+                            {projects[selectedProject].metrics.performance.cpuUsage}%
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="p-3 bg-[#f5f2f0] rounded-lg">
+                      <div className="text-sm font-medium text-[#3f4a44] mb-1">Memoria</div>
+                      <div className="relative pt-1">
+                        <div className="overflow-hidden h-2 text-xs flex rounded bg-[#e6e0db]">
+                          <div
+                            style={{ width: `${projects[selectedProject].metrics.performance.memoryUsage}%` }}
+                            className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-[#c75d3c]"
+                          ></div>
+                        </div>
+                        <div className="text-right mt-1">
+                          <span className="text-sm font-semibold text-[#c75d3c]">
+                            {projects[selectedProject].metrics.performance.memoryUsage}%
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-white rounded-xl shadow-md p-6 border border-[#d1c7bf]">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-lg font-semibold text-[#5c6b63]">Dashboards de Grafana</h3>
+                  <Activity className="w-5 h-5 text-[#c75d3c]" />
+                </div>
+                
+                <div className="space-y-3">
+                  {projects[selectedProject].metrics.monitoring.grafanaDashboards.map((dashboard, index) => (
+                    <div key={index} className="flex items-center justify-between p-3 bg-[#f5f2f0] rounded-lg">
+                      <div className="flex items-center space-x-3">
+                        <div className="w-8 h-8 bg-[#5c6b63] rounded-lg flex items-center justify-center">
+                          <span className="text-white font-bold">{index + 1}</span>
+                        </div>
+                        <div>
+                          <div className="text-sm font-medium text-[#3f4a44]">{dashboard}</div>
+                          <div className="text-xs text-[#5c6b63]">Actualizado en tiempo real</div>
+                        </div>
+                      </div>
+                      <div className="text-[#c75d3c]">
+                        <Activity className="w-4 h-4" />
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
 
